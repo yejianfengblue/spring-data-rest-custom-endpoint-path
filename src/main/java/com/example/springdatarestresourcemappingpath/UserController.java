@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Optional;
 
 @RepositoryRestController
-@RequestMapping("/users")
+@RequestMapping("#{resourceMappings.getMetadataFor(T(com.example.springdatarestresourcemappingpath.User)).getPath().toString()}")
 @RequiredArgsConstructor
 public class UserController {
 
