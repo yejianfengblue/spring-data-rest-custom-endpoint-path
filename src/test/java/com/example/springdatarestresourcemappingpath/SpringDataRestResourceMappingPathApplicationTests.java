@@ -2,6 +2,7 @@ package com.example.springdatarestresourcemappingpath;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -26,6 +27,9 @@ class SpringDataRestResourceMappingPathApplicationTests {
     @Autowired
     ResourceMappings resourceMappings;
 
+    @Value("#{resourceMappings.getMetadataFor(T(com.example.springdatarestresourcemappingpath.User)).getPath().toString()}")
+    String userPath;
+
     @Test
     void testUserGreetingEndpoint() throws Exception {
 
@@ -47,6 +51,12 @@ class SpringDataRestResourceMappingPathApplicationTests {
 
         assertThat(resourceMappings.getMetadataFor(User.class).getPath().toString())
                 .isEqualTo("/users");
+    }
+
+    @Test
+    void testGetResourceMappingPathUsingSpel() {
+
+        assertThat(userPath).isEqualTo("/users");
     }
 
 }
