@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.core.mapping.ResourceMappings;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,6 +23,9 @@ class SpringDataRestResourceMappingPathApplicationTests {
     @Autowired
     RepositoryRestConfiguration repositoryRestConfiguration;
 
+    @Autowired
+    ResourceMappings resourceMappings;
+
     @Test
     void testUserGreetingEndpoint() throws Exception {
 
@@ -36,6 +40,13 @@ class SpringDataRestResourceMappingPathApplicationTests {
 
         assertThat(repositoryRestConfiguration.getBasePath().getPath())
                 .isEqualTo("/api");
+    }
+
+    @Test
+    void testGetResourceMappingPath() {
+
+        assertThat(resourceMappings.getMetadataFor(User.class).getPath().toString())
+                .isEqualTo("/users");
     }
 
 }
